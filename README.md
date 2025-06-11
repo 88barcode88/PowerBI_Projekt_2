@@ -106,3 +106,4 @@ Výsledný Power BI report poskytuje interaktivní pohled na analyzovaná data a
 SQL skripty použité pro přípravu zdrojových dat pro tento Power BI report jsou dostupné v:
 *   `/01_create_database_objects.sql`
 *   `/02_research_questions.sql`
+*   https://github.com/88barcode88/Dbeaver_Kurz_Projekty
