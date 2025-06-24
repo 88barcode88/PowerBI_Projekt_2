@@ -103,6 +103,40 @@ Výsledný Power BI report poskytuje interaktivní pohled na analyzovaná data a
 
 ---
 
+## Aktualizace a vylepšení na základě zpětné vazby 24.06.2025
+
+Na základě připomínek z hodnocení lektora byly v reportu Power BI provedeny následující úpravy a vylepšení:
+
+**1. Datový model - Kalendářová tabulka:**
+*   Byla vytvořena nová dimenzionální tabulka `DimRok` pomocí DAX, obsahující unikátní roky z datových zdrojů.
+*   Původní přímý M:N vztah mezi hlavními datovými tabulkami (`primary_final_2` a `secondary_final_2`) přes sloupec `year` byl odstraněn.
+*   Obě hlavní datové tabulky jsou nyní propojeny s `DimRok` vztahem 1:N.
+*   Všechny vizuály a slicery využívající rok nyní odkazují na sloupec `DimRok[Rok]`, což zajišťuje konzistentní časovou dimenzi a je v souladu s best practices.
+
+**2. Formátování a vzhled:**
+*   **Fonty:** Font DIN v nadpisech byl nahrazen standardním fontem (např. Segoe UI - výchozí Power BI), který korektně zobrazuje české znaky.
+*   **Formátování měny:** Sloupce a míry zobrazující finanční hodnoty (mzdy, ceny, HDP) byly naformátovány jako měna (Kč) s příslušným počtem desetinných míst. Toto formátování je nyní viditelné na osách vizuálů i v kartách.
+*   **Zarovnání a rozložení:** Byla provedena úprava zarovnání a rozmístění vizuálů na jednotlivých stránkách pro lepší vizuální přehlednost a minimalizaci nevyužitého prostoru.
+
+**3. Logika vizuálů, metrik a nadpisy:**
+*   **Agregace dat:** Ve většině vizuálů byla agregace pro číselné hodnoty (mzdy, ceny, GINI, HDP) změněna ze "Součet" na **"Průměr"**, aby se zobrazovaly relevantnější a smysluplnější ukazatele, jak doporučil lektor.
+*   **Nadpisy vizuálů:** Všechny nadpisy vizuálů byly revidovány a upraveny tak, aby byly více vypovídající, konkrétní a jasně popisovaly zobrazená data (např. specifikace "pouze pro ČR" u grafu HDP a mezd).
+*   **Vizuál "Kupní síla":** Míra `Kupní síla` byla zkontrolována a graf upraven tak, aby správně zobrazoval rozdílné hodnoty kupní síly pro chléb a mléko v letech 2006 a 2018. Interakce se slicerem "Jídlo" byla nastavena tak, aby tento graf neovlivňoval a ten zůstal fixován na dané potraviny a roky.
+*   **Matice (EU Srovnání):** Agregace pro GINI koeficient byla změněna na "Průměr". Pro HDP je použit "Průměr" (nebo "Součet" s upřesňujícím nadpisem matice).
+*   **Mapa (EU Srovnání):** Velikost bublin je nyní určena **průměrnou hodnotou GINI koeficientu** (pomocí vytvořené míry `Průměr GINI`), nikoliv počtem záznamů.
+
+**4. Interaktivita:**
+*   **Chybějící slicery (Stránka 1):**
+    *   Byl přidán slicer "Odvětví" (`industry_name`), který ovlivňuje graf srovnání mezd v odvětvích.
+    *   Byl přidán slicer "Typ potraviny" (`food_category_name`), který ovlivňuje graf vývoje cen potravin.
+    *   Interakce těchto nových slicerů byly nastaveny tak, aby neovlivňovaly ostatní vizuály na stránce, které mají zobrazovat celostátní nebo fixní data (např. karta s celostátní průměrnou mzdou, graf vývoje celostátní mzdy).
+*   **Karta "Průměrný roční výdělek":** Byla upravena tak, aby zobrazovala celostátní průměrnou mzdu a nereagovala na slicery "Odvětví" a "Typ potraviny", ale pouze na slicer "Filtr roků".
+
+**Závěr aktualizace:**
+Všechny hlavní připomínky z hodnocení byly adresovány s cílem vylepšit datový model, relevanci zobrazených informací, uživatelskou interaktivitu a celkovou vizuální stránku reportu.
+
+---
+
 SQL skripty použité pro přípravu zdrojových dat pro tento Power BI report jsou dostupné v:
 *   `/01_create_database_objects.sql`
 *   `/02_research_questions.sql`
